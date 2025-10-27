@@ -1,0 +1,60 @@
+.todoLi {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-left: -40px;
+    gap: 15px;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 16px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.todoTitle {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: -10px;
+}
+
+.deleteButton {
+    background-color: green;
+    color: black;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: green 2px solid;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: rgb(1, 112, 1);
+}
+
+.EditButton {
+    background-color: red;
+    color: black;
+    border-radius: 32px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: red 2px solid;
+}
+
+.EditButton:hover {
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: rgb(187, 2, 2);
+    transition: 0.4s ease;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
