@@ -2,14 +2,10 @@
     display: flex;
     flex-direction: column;
     width: 400px;
-    margin-left: -40px;
     gap: 15px;
-    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding-left: 20px;
-    padding-right: 20px;
     border-radius: 16px;
-    padding-bottom: 30px;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
@@ -18,7 +14,6 @@
     font-size: 20px;
     font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin-bottom: -10px;
 }
 
 .deleteButton {
@@ -57,4 +52,21 @@
 .buttons {
     display: flex;
     justify-content: space-between;
+}
+
+.todoDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.complete {
+    width: fit-content;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-color: white;
+    border: white 1px solid;
+}
+
+.description {
+    font-size: 20px;
 }

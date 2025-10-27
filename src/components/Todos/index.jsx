@@ -1,32 +1,44 @@
-import { setTodo, todos } from "../../App";
-import { tempEditTodo } from "../Main";
+import React from "react";
 import styles from "../Todos/Todos.module.css"
 
-export default function Todo({id, title, description, complete}) {
-    function deleteTodo() {
-        const newTodos = todos.filter((todo) => {
-            return todo.id != id;
-        })
+export default function Todo({ id, title, description, completed, todos, updateTodos, setEditItem }) {
+  function deleteTodo() {
+    const filtered = todos.filter((t) => t.id !== id);
+    updateTodos(filtered);
+  }
 
-        setTodo(newTodos)
-    }
+  function startEdit() {
+    setEditItem({ id, title, description, completed });
+  }
 
-    function findEdit() {
-        const findEditElement = todos.find((todo) => {
-            return todo.id == id
-        })
+  function toggleComplete() {
+    const updated = todos.map((t) =>
+      t.id === id ? { ...t, completed: !t.completed } : t
+    );
+    updateTodos(updated);
+  }
 
-        tempEditTodo(findEditElement)
-    }
   return (
     <li className={styles.todoLi}>
+      <div className={styles.todoDiv}>
         <h3 className={styles.todoTitle}>{title}</h3>
-        <p className={styles.todoDescription}>{description}</p>
-        <p className={styles.todoComplete}>{complete ? "✅" : "❌"}</p>
-        <span className={styles.buttons}>
-            <button onClick={deleteTodo} className={styles.deleteButton}>Delete</button>
-            <button onClick={findEdit} className={styles.EditButton}>Edit</button>
-        </span>
+        
+        {description && <p className={styles.description}>{description}</p>}
+        
+        <button className={styles.complete} onClick={toggleComplete}>
+          {completed ? "✅" : "❌"}
+        </button>
+        
+        <div className={styles.buttons}>
+          <button className={styles.EditButton} onClick={startEdit} style={{ marginRight: 8 }}>
+            Edit
+          </button>
+          <button onClick={deleteTodo} className={styles.deleteButton}>
+            Delete
+          </button>
+        </div>
+      </div>
+
     </li>
-  )
+  );
 }

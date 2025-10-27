@@ -1,134 +1,117 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
 import styles from "../Main/Main.module.css"
-import { getTodo, setTodo, todos } from '../../App';
 
-let elEdID = null;
+export default function Main({ todos, updateTodos, editItem, setEditItem }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [completed, setCompleted] = useState(false);
 
-export function tempEditTodo(editedElement) {
-  localStorage.setItem("editedElement", JSON.stringify(editedElement))
-}
-
-export default function Main() {
-
-  function addTodo(newTodo) {
-      let maxID = 0;
-
-      todos.forEach((todo) => {
-        if (todo.id > maxID) {
-          maxID = todo.id;
-        }
-      })
-
-      newTodo.id = maxID + 1;
-
-      const result = [newTodo, ...todos]
-      
-
-      setTodo(result);
-  }
-
-  function editTodo(editedTodo) {
-    editedTodo.id = elEdID   
-    const result = todos.map((todo) => {
-        if (todo.id == editedTodo.id) {
-            return editedTodo
-        } else {
-            return todo
-        }
-    })
-    setTodo(result)
-  }
-
-  const [title, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [completed, setCompleted] = useState(false)
-
-  function editedTodoo() {
-    let temp = localStorage.getItem("editedElement")
-    let edTo = JSON.parse(temp)
-    elEdID = edTo.id;
-    
-
-    setName(edTo.title)
-    setDescription(edTo.description)
-    setCompleted(edTo.complete)
-  }
-
-  function editYigish(e) {
-    e.preventDefault()
-    let editData = {
-      title,
-      description,
-      completed,
+  useEffect(() => {
+    if (editItem) {
+      setTitle(editItem.title || "");
+      setDescription(editItem.description || "");
+      setCompleted(Boolean(editItem.completed));
+    } else {
+      setTitle("");
+      setDescription("");
+      setCompleted(false);
     }
+  }, [editItem]);
 
-    editTodo(editData);
+  function clearForm() {
+    setTitle("");
+    setDescription("");
+    setCompleted(false);
+    setEditItem(null);
   }
 
-  if (localStorage.getItem("editedElement")) {
-    
-    editedTodoo()
-    localStorage.removeItem("editedElement")
+  function handleAdd(e) {
+    e.preventDefault();
+    if (!title.trim()) return alert("Iltimos title kiriting");
+
+    const newTodo = {
+      id: Date.now(),
+      title: title.trim(),
+      description: description.trim(),
+      completed: Boolean(completed),
+    };
+
+    updateTodos([newTodo, ...todos]);
+    clearForm();
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSaveEdit(e) {
+    e.preventDefault();
+    if (!editItem) return;
 
-    const data = {
-      title,
-      description,
-      completed,
-    }
+    const updated = todos.map((t) =>
+      t.id === editItem.id
+        ? { ...t, title: title.trim(), description: description.trim(), completed: Boolean(completed) }
+        : t
+    );
 
-    addTodo(data)
+    updateTodos(updated);
+    clearForm();
   }
 
-  
-  getTodo()
   return (
     <div className={styles.mainSection}>
-      <form className={styles.form} id='form' onSubmit={handleSubmit}>
-        <h1>Todo title</h1>
+      <form className={styles.form} onSubmit={editItem ? handleSaveEdit : handleAdd}>
+        <h2 className={styles.todoTitle}>{editItem ? "Todo tahrirlash" : "Yangi todo qo'shish"}</h2>
 
-        <input
-          className={styles.formName}
-          type="text"
-          placeholder="Ismingizni kiriting"
-          value={title}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div>
+          <label className={styles.desCont}>
+            Title:
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Title"
+              className={styles.formName}
+            />
+          </label>
+        </div>
 
-        <br /><br />
+        <div style={{ marginTop: 8 }}>
+          <label className={styles.desCont}>
+            Description:
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description"
+              rows={4}
+              className={styles.formDescription}
+            />
+          </label>
+        </div>
 
-        <p>To-Do uchun izoh yozing:</p>
-        <textarea
-          className={styles.formDescription}
-          rows="5"
-          placeholder="Xabaringizni yozing"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <br /><br />
 
         <div className={styles.footer}>
-          <label
-            className={styles.compCheck}
-          >
+        <div style={{ marginTop: 8 }}>
+          <label>
             <input
-              className={styles.compCheck}
               type="checkbox"
               checked={completed}
               onChange={(e) => setCompleted(e.target.checked)}
-            />
+              className={styles.compCheck}
+            />{" "}
             Bajarilganmi?
           </label>
+        </div>
 
-
-          <button onClick={editYigish} className={styles.submitButton} type="submit">Tahrirlash</button>
-          <button className={styles.submitButton} type="submit">Qo'shish</button>
+          {editItem ? (
+            <>
+              <button type="submit" style={{ marginRight: 8 }}>
+                Saqlash
+              </button>
+              <button type="button" onClick={clearForm}>
+                Bekor qilish
+              </button>
+            </>
+          ) : (
+            <button className={styles.addButton} type="submit">Qo'shish</button>
+          )}
         </div>
       </form>
     </div>
-  )
+  );
 }

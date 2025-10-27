@@ -43,8 +43,40 @@ textarea:focus {
     align-items: center;
     width: 420px;
     justify-content: space-between;
+    margin-bottom: 25px;
+    margin-top: 20px;
 }
 
 .compCheck {
     cursor: pointer;
+}
+
+.desCont {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.todoTitle {
+    color: rgb(179, 1, 179);
+    font-size: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 40px;
+}
+
+.addButton {
+    padding: 10px;
+    font-size: 14px;
+    background-color: aquamarine;
+    border: aquamarine 1px solid;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.addButton:hover {
+    transition: 0.2s ease;
+    /* border: black 1px solid; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
