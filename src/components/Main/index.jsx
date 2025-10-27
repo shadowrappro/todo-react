@@ -71,7 +71,7 @@ export default function Main({ todos, updateTodos, editItem, setEditItem }) {
           </label>
         </div>
 
-        <div style={{ marginTop: 8 }}>
+        <div>
           <label className={styles.desCont}>
             Description:
             <textarea
@@ -86,7 +86,7 @@ export default function Main({ todos, updateTodos, editItem, setEditItem }) {
 
 
         <div className={styles.footer}>
-        <div style={{ marginTop: 8 }}>
+        <div>
           <label>
             <input
               type="checkbox"
