@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Todos/Todos.module.css"
+import { Button } from "@/components/ui/button"
 
 export default function Todo({ id, title, description, completed, todos, updateTodos, setEditItem }) {
   function deleteTodo() {
@@ -30,12 +31,12 @@ export default function Todo({ id, title, description, completed, todos, updateT
         </button>
         
         <div className={styles.buttons}>
-          <button className={styles.EditButton} onClick={startEdit} style={{ marginRight: 8 }}>
+          <Button variant="destructive" onClick={startEdit}>
             Edit
-          </button>
-          <button onClick={deleteTodo} className={styles.deleteButton}>
+          </Button>
+          <Button variant="ghost" onClick={deleteTodo}>
             Delete
-          </button>
+          </Button>
         </div>
       </div>
 
